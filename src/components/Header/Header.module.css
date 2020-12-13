@@ -1,0 +1,110 @@
+.headerWrap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 5;
+  width: 100%;
+  margin-top: 15px;
+}
+
+.header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.headerLogo {
+  background-image: url('../../img/logo.svg');
+  min-width: 30px;
+  min-height: 30px;
+  background-repeat: no-repeat;
+  background-size: 30px auto;
+}
+
+.headerPhone {
+  background-image: url('../../img/phone.svg');
+  min-width: 24px;
+  min-height: 24px;
+  background-repeat: no-repeat;
+  background-size: 24px auto;
+  cursor: pointer;
+}
+
+.headerPhone:active {
+  min-width: 30px;
+  min-height: 30px;
+  background-size: 30px auto;
+}
+
+.headerPhonelink {
+  display: none;
+}
+
+@media (min-width: 576px) {
+  .headerLogo {
+    min-width: 45px;
+    min-height: 45px;
+    background-size: 45px auto;
+  }
+
+  .headerPhone {
+    outline: transparent;
+    min-width: 40px;
+    min-height: 40px;
+    background-size: 40px auto;
+  }
+
+  .headerPhone:active,
+  .headerPhone:hover {
+    outline: transparent;
+    min-width: 45px;
+    min-height: 45px;
+    background-size: 45px auto;
+  }
+}
+
+@media (min-width: 768px) {
+  .headerPhone {
+    display: none;
+  }
+
+  .headerPhonelink {
+    display: block;
+  }
+
+  .headerPhonelink a {
+    font-size: 18px;
+    color: #ffffff;
+    text-decoration: none;
+  }
+}
+
+@media (min-width: 992px) {
+  .headerLogo {
+    min-width: 60px;
+    min-height: 60px;
+    background-size: 60px auto;
+  }
+
+  .headerPhonelink a {
+    font-size: 21px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .headerLogo {
+    min-width: 68px;
+    min-height: 68px;
+    background-size: 68px auto;
+  }
+
+  .headerPhonelink a {
+    font-size: 24px;
+  }
+}
