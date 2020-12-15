@@ -54,7 +54,7 @@ export const NavBar = () => (
       <H1>MrDonalds's</H1>
     </Logo>
 
-    <LoginBlock>
+    <LoginBlock href="/">
       <LoginLogo src= {LoginImg} alt="Login logo"/>
       <Login>Войти</Login>
     </LoginBlock>
