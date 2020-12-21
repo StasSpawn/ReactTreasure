@@ -45,11 +45,20 @@ export const GlobalStyle = createGlobalStyle`
     margin: 0;
   }
   button {
-    cursor:pointer;
+    cursor: pointer;
   }
   
   button, input {
-    font-family: inherit;
+    font: inherit;
+  }
+  
+  input [type='number'] {
+    -moz-appearance: textfield;
+    -webkit-appearance: textfield;
+  }
+  input::-webkit-outer-spin-button, 
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
   }
   
   

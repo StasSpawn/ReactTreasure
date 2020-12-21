@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavBar }  from './components/navbar/NavBar';
 import { Menu }  from './components/menu/Menu';
-import { ModalItem }  from './components/modalItem/ModalItem';
+import { ModalItem }  from './components/modal/ModalItem';
 import { GlobalStyle }  from './components/styles/GlobalStyle';
 import { Order }  from './components/order/Order';
 import { useOpenItem }  from './components/Hooks/useOpenItem';

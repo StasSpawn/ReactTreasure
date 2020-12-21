@@ -3,6 +3,8 @@ import styled from 'styled-components';
 
 import { ButtonCheckout }  from '../styles/ButtonCheckout';
 import { OrderListItem }  from './OrderListItem';
+import { totalPriceItems } from '../functions/secondaryFunctions';
+import { toLocalStringRub }  from '../functions/secondaryFunctions';
 
 const OrderStyles = styled.section`
   position: fixed;
@@ -48,7 +50,13 @@ const TotalPrice = styled.span`
   margin-left: 20px;
 `;
 
+
+
+
 export const Order = ({ orders }) => {
+  const total = orders.reduce((result, order) =>
+    totalPriceItems(order) + result, 0)
+
   return (
     <OrderStyles>
       <OrderTitle>
@@ -64,7 +72,7 @@ export const Order = ({ orders }) => {
       <Total>
         <span>Итого</span>
         <span>5</span>
-        <TotalPrice> 850 Р</TotalPrice>
+        <TotalPrice> {toLocalStringRub(total)} </TotalPrice>
       </Total>
       <ButtonCheckout>Оформить</ButtonCheckout>
     </OrderStyles>
