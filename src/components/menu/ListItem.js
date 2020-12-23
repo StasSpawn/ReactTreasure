@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { toLocalStringRub }  from '../functions/secondaryFunctions';
+import { formatCurrency }  from '../functions/secondaryFunctions';
 
 const List = styled.ul`
   display:flex;
@@ -58,7 +58,7 @@ export const ListItem = ({ itemList, setOpenItem }) => (
         img={item.img}
         onClick={() => setOpenItem(item)}>
         <p>{item.name}</p>
-        <p>{toLocalStringRub(item.price)}</p>
+        <p>{formatCurrency(item.price)}</p>
 
       </Item>
     ))}

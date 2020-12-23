@@ -2,13 +2,14 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { totalPriceItems } from '../functions/secondaryFunctions';
-import { toLocalStringRub }  from '../functions/secondaryFunctions';
+import { formatCurrency }  from '../functions/secondaryFunctions';
 
 import trashImg from '../../img/trash.svg';
 
 
 const OrderItemStyled = styled.li`
   display: flex;
+  flex-wrap: wrap;
   margin: 15px 0;
 `;
 
@@ -32,15 +33,30 @@ const TrashButton = styled.button`
   cursor: pointer;
 `;
 
-export const OrderListItem = ({ order }) => (
+const Toppings = styled.div`
+  width: 100%;
+  color: #9a9a9a;
+  font-size: 14px;
+`;
 
-  <OrderItemStyled>
-    <ItemName>{order.name}</ItemName>
-    <ItemPrice>{order.count}</ItemPrice>
-    <span>
-      {toLocalStringRub(totalPriceItems(order))}
-    </span>
-    <TrashButton/>
-  </OrderItemStyled>
 
-);
+
+export const OrderListItem = ({ order }) => {
+
+  const topping = order.topping.filter(item => item.checked)
+    .map(item => item.name).join(', ');
+
+  console.log(topping)
+
+  return(
+    <OrderItemStyled>
+      <ItemName>{order.name}</ItemName>
+      <ItemPrice>{order.count}</ItemPrice>
+      <span>{formatCurrency(totalPriceItems(order))}</span>
+      <TrashButton/>
+      {topping && <Toppings>Допы: {topping}</Toppings>}
+    </OrderItemStyled>
+  )
+
+
+};

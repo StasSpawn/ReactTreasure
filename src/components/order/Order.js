@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { ButtonCheckout }  from '../styles/ButtonCheckout';
 import { OrderListItem }  from './OrderListItem';
 import { totalPriceItems } from '../functions/secondaryFunctions';
-import { toLocalStringRub }  from '../functions/secondaryFunctions';
+import { formatCurrency }  from '../functions/secondaryFunctions';
 
 const OrderStyles = styled.section`
   position: fixed;
@@ -13,7 +13,7 @@ const OrderStyles = styled.section`
   display:flex;
   flex-direction: column;
   background-color: #fff;
-  min-width: 380px;
+  width: 380px;
   height: calc(100% - 89px);
   box-shadow: 3px 4px 5px rgba(0, 0, 0, .25);
   padding: 20px;
@@ -57,6 +57,9 @@ export const Order = ({ orders }) => {
   const total = orders.reduce((result, order) =>
     totalPriceItems(order) + result, 0)
 
+  const totalCounter = orders.reduce((result, order) =>
+    order.count + result, 0)
+
   return (
     <OrderStyles>
       <OrderTitle>
@@ -71,8 +74,8 @@ export const Order = ({ orders }) => {
       </OrderContent>
       <Total>
         <span>Итого</span>
-        <span>5</span>
-        <TotalPrice> {toLocalStringRub(total)} </TotalPrice>
+        <span>{totalCounter}</span>
+        <TotalPrice> {formatCurrency(total)} </TotalPrice>
       </Total>
       <ButtonCheckout>Оформить</ButtonCheckout>
     </OrderStyles>
