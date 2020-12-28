@@ -53,7 +53,7 @@ const TotalPrice = styled.span`
 
 
 
-export const Order = ({ orders, setOrders, setOpenItem }) => {
+export const Order = ({ orders, setOrders, setOpenItem, authentication, logIn }) => {
   const deleteItem = index => {
     const newOrders = orders.filter((item, i) =>
       index !== i);
@@ -92,7 +92,13 @@ export const Order = ({ orders, setOrders, setOpenItem }) => {
         <span>{totalCounter}</span>
         <TotalPrice> {formatCurrency(total)} </TotalPrice>
       </Total>
-      <ButtonCheckout>Оформить</ButtonCheckout>
+      <ButtonCheckout onClick={() => {
+        if (authentication) {
+          console.log(orders)
+        } else {
+          logIn()
+        }
+      }}>Оформить</ButtonCheckout>
     </OrderStyles>
 
   )
