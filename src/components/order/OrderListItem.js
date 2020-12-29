@@ -49,7 +49,6 @@ export const OrderListItem = ({ order, index, deleteItem, setOpenItem }) => {
     .join(', ');
 
   const refDeleteButton = React.useRef(null);
-  console.log(refDeleteButton)
 
 
   return(

@@ -1,6 +1,9 @@
 import React from 'react';
 import firebase from "firebase/app";
 import 'firebase/auth';
+import 'firebase/database';
+
+
 import { NavBar }  from './components/navbar/NavBar';
 import { Menu }  from './components/menu/Menu';
 import { ModalItem }  from './components/modal/ModalItem';
@@ -9,6 +12,7 @@ import { Order }  from './components/order/Order';
 import { useOpenItem }  from './components/Hooks/useOpenItem';
 import { useOrders }  from './components/Hooks/useOrders';
 import { useAuth }  from './components/Hooks/useAuth';
+import { useTitle }  from './components/Hooks/useTitle';
 
 
 const firebaseConfig = {
@@ -25,18 +29,22 @@ firebase.initializeApp(firebaseConfig);
 
 
 function App() {
-
   const auth = useAuth(firebase.auth);
-
   const openItem = useOpenItem();
   const orders = useOrders();
+  useTitle(openItem.openItem);
 
 
   return (
     <>
       <GlobalStyle/>
       <NavBar {...auth}/>
-      <Order {...orders} {...openItem} {...auth}/>
+      <Order {...orders}
+             {...openItem}
+             {...auth}
+             firebaseDatabase={firebase.database}
+      />
+
       <Menu {...openItem}/>
       { openItem.openItem && <ModalItem {...openItem} {...orders}/>}
 
