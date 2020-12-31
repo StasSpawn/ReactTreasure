@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { ListItem } from './ListItem';
-import dbMenu from "../DBMenu";
+import { useFetch } from "../Hooks/useFetch";
 
 // IMAGES
 import mainBannerImage from '../../img/banner.png';
@@ -26,27 +26,39 @@ const MainBanner = styled.div`
 
 
 
-export const Menu = ( {setOpenItem} ) => (
-  <MenuStyled>
-    <MainBanner>
-      <img src= {mainBannerImage} alt="Главный баннер"/>
-    </MainBanner>
-    <SectionMenu>
-      <h2>Бургеры </h2>
-      <ListItem
-        itemList={dbMenu.burger}
-        setOpenItem={setOpenItem}
-      />
-    </SectionMenu>
+export const Menu = ( {setOpenItem} ) => {
+  const res = useFetch()
 
-    <SectionMenu>
-      <h2>Закуски / Напитки </h2>
-      <ListItem
-        itemList={dbMenu.other}
-        setOpenItem={setOpenItem}
-      />
-    </SectionMenu>
+  const dbMenu = res.response
+
+  return (
+    <MenuStyled>
+      <MainBanner>
+        <img src= {mainBannerImage} alt="Главный баннер"/>
+      </MainBanner>
+      {res.response ?
+        <>
+          <SectionMenu>
+            <h2>Бургеры </h2>
+            <ListItem
+              itemList={dbMenu.burger}
+              setOpenItem={setOpenItem}
+            />
+          </SectionMenu>
+
+          <SectionMenu>
+            <h2>Закуски / Напитки </h2>
+            <ListItem
+              itemList={dbMenu.other}
+              setOpenItem={setOpenItem}
+            />
+          </SectionMenu>
+        </> : res.error ?
+        <div>Sorry, we eill fix it</div> :
+        <div>Loading... Please wait</div>
+      }
 
 
-  </MenuStyled>
-);
+    </MenuStyled>
+  )
+};
