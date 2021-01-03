@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 
-import { totalPriceItems } from '../functions/secondaryFunctions';
-import { formatCurrency }  from '../functions/secondaryFunctions';
+import { totalPriceItems, formatCurrency } from '../functions/secondaryFunctions';
 
 import trashImg from '../../img/trash.svg';
+
+import { Context }  from '../functions/context';
 
 
 const OrderItemStyled = styled.li`
@@ -42,7 +43,9 @@ const Toppings = styled.div`
 
 
 
-export const OrderListItem = ({ order, index, deleteItem, setOpenItem }) => {
+export const OrderListItem = ({ order, index, deleteItem }) => {
+
+  const { openItem: {setOpenItem } } = useContext(Context)
 
   const topping = order.topping.filter(item => item.checked)
     .map(item => item.name)

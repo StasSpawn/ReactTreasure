@@ -1,7 +1,9 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import styled from 'styled-components';
 import logoImg from '../../img/logo.svg';
 import LoginImg from '../../img/sign.svg';
+
+import { Context }  from '../functions/context';
 
 const NavBarStyled = styled.header`
   position: fixed;
@@ -30,13 +32,6 @@ const H1 = styled.h1`
 const ImgLogo = styled.img`
   width: 50px;
 `;
-
-/*const Login = styled.p`
-  color: white;
-  text-transform: uppercase;
-  font-size: 16px;
-  padding-top: 7px;
-`;*/
 
 const LoginLogo = styled.img`
   color: white;
@@ -67,33 +62,32 @@ const Figure = styled.figure`
 `;
 
 
-export const NavBar = ({authentication, logIn, logOut}) => (
-  <NavBarStyled>
-    <Logo>
-      <ImgLogo src= {logoImg} alt="logo"/>
-      <H1>MrDonalds's</H1>
-    </Logo>
+export const NavBar = () => {
+  const {auth: {authentication, logIn, logOut}} = useContext(Context);
 
-    {authentication ?
-      <User>
-        <Figure>
-          <LoginLogo src= {LoginImg} alt={authentication.displayName}/>
-          <figcaption>{authentication.displayName}</figcaption>
-        </Figure>
-        <LogOut title='Выйти' onClick={logOut}>X</LogOut>
-      </User>
-    :
-      <LoginBlock onClick={logIn} href="#!">
-        <Figure>
-          <LoginLogo src= {LoginImg} alt="Login logo"/>
-          <figcaption>Войти</figcaption>
-        </Figure>
-      </LoginBlock>
-    }
+  return (
+    <NavBarStyled>
+      <Logo>
+        <ImgLogo src= {logoImg} alt="logo"/>
+        <H1>MrDonalds's</H1>
+      </Logo>
 
-
-
-
-
-  </NavBarStyled>
-);
+      {authentication ?
+        <User>
+          <Figure>
+            <LoginLogo src= {LoginImg} alt={authentication.displayName}/>
+            <figcaption>{authentication.displayName}</figcaption>
+          </Figure>
+          <LogOut title='Выйти' onClick={logOut}>X</LogOut>
+        </User>
+        :
+        <LoginBlock onClick={logIn} href="#!">
+          <Figure>
+            <LoginLogo src= {LoginImg} alt="Login logo"/>
+            <figcaption>Войти</figcaption>
+          </Figure>
+        </LoginBlock>
+      }
+    </NavBarStyled>
+  )
+};

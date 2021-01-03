@@ -13,6 +13,9 @@ import { useOpenItem }  from './components/Hooks/useOpenItem';
 import { useOrders }  from './components/Hooks/useOrders';
 import { useAuth }  from './components/Hooks/useAuth';
 import { useTitle }  from './components/Hooks/useTitle';
+import { OrderConfirm }  from './components/order/OrderConfirm';
+import { useOrderConfirm }  from './components/Hooks/UseOrderConfirm';
+import { Context }  from './components/functions/context';
 
 
 const firebaseConfig = {
@@ -32,24 +35,29 @@ function App() {
   const auth = useAuth(firebase.auth);
   const openItem = useOpenItem();
   const orders = useOrders();
+  const orderConfirm = useOrderConfirm();
+
+
   useTitle(openItem.openItem);
 
 
   return (
-    <>
-      <GlobalStyle/>
-      <NavBar {...auth}/>
-      <Order {...orders}
-             {...openItem}
-             {...auth}
-             firebaseDatabase={firebase.database}
-      />
+    <Context.Provider value={{
+      auth,
+      openItem,
+      orders,
+      orderConfirm,
+      firebaseDatabase: firebase.database
+    }}>
+      <GlobalStyle />
+      <NavBar />
+      <Order />
 
-      <Menu {...openItem}/>
-      { openItem.openItem && <ModalItem {...openItem} {...orders}/>}
+      <Menu />
+      { openItem.openItem && <ModalItem />}
+      {orderConfirm.openOrderConfirm && <OrderConfirm />}
 
-
-    </>
+    </Context.Provider>
 
   );
 }

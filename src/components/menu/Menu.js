@@ -1,8 +1,10 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import styled from 'styled-components';
 
 import { ListItem } from './ListItem';
 import { useFetch } from "../Hooks/useFetch";
+
+import { Context }  from '../functions/context';
 
 // IMAGES
 import mainBannerImage from '../../img/banner.png';
@@ -26,7 +28,9 @@ const MainBanner = styled.div`
 
 
 
-export const Menu = ( {setOpenItem} ) => {
+export const Menu = ( ) => {
+  const { openItem:  {setOpenItem}} = useContext(Context)
+
   const res = useFetch()
 
   const dbMenu = res.response

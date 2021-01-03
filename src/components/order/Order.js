@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 
 import { ButtonCheckout }  from '../styles/ButtonCheckout';
 import { OrderListItem }  from './OrderListItem';
-import { totalPriceItems } from '../functions/secondaryFunctions';
-import { formatCurrency }  from '../functions/secondaryFunctions';
-import { projection }  from '../functions/secondaryFunctions';
+import { totalPriceItems, formatCurrency } from '../functions/secondaryFunctions';
+
+import { Context }  from '../functions/context';
+
 
 const OrderStyles = styled.section`
   position: fixed;
@@ -20,7 +21,7 @@ const OrderStyles = styled.section`
   padding: 20px;
 `;
 
-const OrderTitle = styled.h2`
+export const OrderTitle = styled.h2`
   text-align: center;
   text-transform: uppercase;
   margin-bottom: 30px;
@@ -37,7 +38,7 @@ const EmptyList = styled.p`
   text-align: center;
 `;
 
-const Total = styled.div`
+export const Total = styled.div`
   display: flex;
   margin: 0 35px 30px;
   & span:first-child {
@@ -45,38 +46,21 @@ const Total = styled.div`
   }
 `;
 
-const TotalPrice = styled.span`
+export const TotalPrice = styled.span`
   text-align: right;
   min-width: 65px;
   margin-left: 20px;
 `;
 
 
+export const Order = () => {
 
-const rulesData = {
-  itemName: ['name'],
-  price: ['price'],
-  count: ['count'],
-  topping: ['topping', arr => arr.filter(obj => obj.checked).map(obj => obj.name),
-    arr => arr.length ? arr : 'No topping'],
-  choice: ['choice', item => item ? item : 'no choices'],
-}
+  const {
+    auth: {authentication, logIn},
+    orders: { orders, setOrders },
+    orderConfirm: { setOpenOrderConfirm }
+  } = useContext(Context)
 
-
-
-export const Order = ({ orders, setOrders, setOpenItem, authentication, logIn, firebaseDatabase}) => {
-
-  const dataBase = firebaseDatabase();
-
-  const sendOrder = () => {
-    const newOrder = orders.map(projection(rulesData))
-    dataBase.ref('orders').push().set({
-      nameClient: authentication.displayName,
-      email: authentication.email,
-      order: newOrder
-    });
-    setOrders([])
-  }
 
   const deleteItem = index => {
     const newOrders = orders.filter((item, i) =>
@@ -106,23 +90,27 @@ export const Order = ({ orders, setOrders, setOpenItem, authentication, logIn, f
             order={order}
             deleteItem={deleteItem}
             index={index}
-            setOpenItem={setOpenItem}
           />)}
         </OrderList> :
         <EmptyList> Список заказов пуст</EmptyList>}
       </OrderContent>
-      <Total>
-        <span>Итого</span>
-        <span>{totalCounter}</span>
-        <TotalPrice> {formatCurrency(total)} </TotalPrice>
-      </Total>
-      <ButtonCheckout onClick={() => {
-        if (authentication) {
-          sendOrder()
-        } else {
-          logIn()
-        }
-      }}>Оформить</ButtonCheckout>
+      { orders.length ?
+        <>
+          <Total>
+            <span>Итого</span>
+            <span>{totalCounter}</span>
+            <TotalPrice> {formatCurrency(total)} </TotalPrice>
+          </Total>
+          <ButtonCheckout onClick={() => {
+            if (authentication) {
+              setOpenOrderConfirm(true)
+            } else {
+              logIn()
+            }
+          }}>Оформить
+          </ButtonCheckout>
+        </> : null
+      }
     </OrderStyles>
 
   )
